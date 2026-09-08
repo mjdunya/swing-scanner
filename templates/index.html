@@ -39,7 +39,9 @@ body::after{width:520px;height:520px;background:rgba(139,92,246,.16);bottom:-160
   color:#fff;transition:all .2s ease;position:relative;overflow:hidden}
 .btn.green{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 22px rgba(34,197,94,.35)}
 .btn.blue{background:linear-gradient(135deg,#1d4ed8,#3b82f6);box-shadow:0 4px 22px rgba(59,130,246,.35)}
+.btn.red{background:linear-gradient(135deg,#b91c1c,#ef4444);box-shadow:0 4px 22px rgba(239,68,68,.35)}
 .btn.green:hover,.btn.blue:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn.red:hover{transform:translateY(-2px);filter:brightness(1.1)}
 .btn:disabled{background:#374151;box-shadow:none;cursor:wait;transform:none}
 #status{color:var(--gold);font-size:14px;font-weight:600}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--gold);
@@ -61,6 +63,13 @@ body::after{width:520px;height:520px;background:rgba(139,92,246,.16);bottom:-160
   padding:14px 18px;font-size:16px;font-weight:600;min-width:280px;cursor:pointer;transition:all .2s}
 .big-select.period{border-color:var(--purple)}
 .big-select:focus{outline:none;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
+.scope-box{margin-top:18px;padding:16px 18px;border:1px solid rgba(245,158,11,.35);border-radius:14px;background:rgba(245,158,11,.08)}
+.scope-box label{color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase}
+.scope-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.scope-row select,.scope-row input{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:15px}
+.scope-row input{min-width:280px;flex:1}
+.scope-row input:focus,.scope-row select:focus{outline:none;border-color:var(--gold)}
+.card-select{width:18px;height:18px;accent-color:var(--blue);cursor:pointer;margin-right:10px;vertical-align:-2px}
 
 .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 18px}
 .tab{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;
@@ -200,9 +209,22 @@ footer{text-align:center;color:#475569;font-size:12px;margin-top:50px;line-heigh
       <span class="badge">🧪 Edge: <b>{{ backtest.expectancy }}%/trade</b></span>
       {% endif %}
     </div>
+    <div class="scope-box">
+      <label for="backtestScope">Backtest scope</label>
+      <div class="scope-row">
+        <select id="backtestScope" onchange="toggleScopeInput(this.value)">
+          <option value="all" selected>All stocks</option>
+          <option value="typed">Typed symbols</option>
+          <option value="checked">Checked cards</option>
+        </select>
+        <input id="typedSymbols" type="text" placeholder="e.g. RELIANCE, TCS, INFY" style="display:none">
+        <span id="checkedCount" class="price">0 cards checked</span>
+      </div>
+    </div>
     <div class="btn-row">
       <button class="btn green" id="scanBtn" onclick="startJob('/api/scan','scanBtn','scan')">🔄 Run New Scan</button>
       <button class="btn blue" id="btBtn" onclick="startJob('/api/backtest','btBtn','backtest')">🧪 Run Backtest</button>
+      <button class="btn red" id="cancelBtn" onclick="cancelJob()" style="display:none">✖ Cancel</button>
       <span id="status"></span>
     </div>
   </div>
@@ -300,6 +322,7 @@ var STYLES = {
 };
 
 var SIGNALS = JSON.parse(document.getElementById('signals-data').textContent);
+var checkedSymbols = {};
 
 ['scalp','swing','positional','invest'].forEach(function(s) {
   SIGNALS[s] = SIGNALS[s] || [];
@@ -342,14 +365,37 @@ function holdLabel(days) {
 }
 function money(n) { return CUR + Math.round(n).toLocaleString('en-IN'); }
 
+function toggleScopeInput(scope) {
+  document.getElementById('typedSymbols').style.display = scope === 'typed' ? 'block' : 'none';
+}
+
+function toggleCard(symbol, checked) {
+  if (checked) checkedSymbols[symbol] = true;
+  else delete checkedSymbols[symbol];
+  var count = Object.keys(checkedSymbols).length;
+  document.getElementById('checkedCount').textContent = count + (count === 1 ? ' card checked' : ' cards checked');
+}
+
+function selectedBacktestSymbols() {
+  var scope = document.getElementById('backtestScope').value;
+  if (scope === 'typed') {
+    return document.getElementById('typedSymbols').value.split(',')
+      .map(function(symbol) { return symbol.trim(); })
+      .filter(Boolean);
+  }
+  if (scope === 'checked') return Object.keys(checkedSymbols);
+  return [];
+}
+
 function cardHTML(style, idx) {
   var r = SIGNALS[style][idx];
   var st = STYLES[style];
   var targetTxt = r.target > 0 ? CUR + r.target.toFixed(1) : 'Trail 🏇';
   var why = '';
   for (var i = 0; i < r.why.length; i++) why += '▸ <b>' + r.why[i] + '</b><br>';
-  var html = '<div class="card t-' + style + '">';
-  html += '<div class="card-header"><span class="symbol">' + r.sym +
+  var isChecked = checkedSymbols[r.sym] ? ' checked' : '';
+  var html = '<div class="card t-' + style + '" data-symbol="' + r.sym + '">';
+  html += '<div class="card-header"><span class="symbol"><input class="card-select" type="checkbox" data-symbol="' + r.sym + '"' + isChecked + ' onchange="toggleCard(this.dataset.symbol, this.checked)">' + r.sym +
     '<span class="chip ' + (r.chg >= 0 ? 'up' : 'down') + '">' +
     (r.chg >= 0 ? '+' : '') + r.chg.toFixed(1) + '%</span></span>' +
     '<span><span class="price">' + CUR + r.price.toFixed(1) + '</span>' +
@@ -516,10 +562,12 @@ function startJob(url, btnId, type) {
   var status = document.getElementById('status');
   btn.disabled = true;
   status.innerHTML = '<span class="spinner"></span>Starting...';
+  var payload = { market: MARKET };
+  if (type === 'backtest') payload.symbols = selectedBacktestSymbols();
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ market: MARKET })
+    body: JSON.stringify(payload)
   })
   .then(function(r) { return r.json(); })
   .then(function(d) {
@@ -546,6 +594,7 @@ function pollUntilDone() {
     fetch('/api/status')
       .then(function(r) { return r.json(); })
       .then(function(s) {
+        updateJobControls(s);
         if (!s.scan_running && !s.backtest_running) {
           clearInterval(timer);
           hideOverlay(true);
@@ -560,13 +609,35 @@ function pollUntilDone() {
   }, 5000);
 }
 
+function updateJobControls(s) {
+  document.getElementById('cancelBtn').style.display = (s.scan_running || s.backtest_running) ? 'inline-block' : 'none';
+}
+
+function cancelJob() {
+  if (!confirm('Cancel the running job and save partial results?')) return;
+  fetch('/api/cancel', { method: 'POST' })
+    .then(function(r) { return r.json(); })
+    .then(function() { location.reload(); })
+    .catch(function() { toast('❌ Could not cancel the job', ''); });
+}
+
+function pollJobControls() {
+  fetch('/api/status')
+    .then(function(r) { return r.json(); })
+    .then(updateJobControls)
+    .catch(function() { /* server offline, ignore */ });
+}
+
 fetch('/api/status')
   .then(function(r) { return r.json(); })
   .then(function(s) {
+    updateJobControls(s);
     if (s.scan_running) { showOverlay('scan'); pollUntilDone(); }
     else if (s.backtest_running) { showOverlay('backtest'); pollUntilDone(); }
   })
   .catch(function() { /* server offline, ignore */ });
+
+setInterval(pollJobControls, 3000);
 
 window.addEventListener('scroll', function() {
   document.getElementById('toTop').style.display = window.scrollY > 500 ? 'block' : 'none';

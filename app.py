@@ -17,6 +17,7 @@ ENV = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONUTF8="1")
 
 scan_running = False
 backtest_running = False
+current_process = None
 
 
 # ═══════════════════════════════════════════════════════════
@@ -122,7 +123,7 @@ def load_backtest(market):
 
 
 def run_job(cmd):
-    global scan_running, backtest_running
+    global scan_running, backtest_running, current_process
     try:
         process = subprocess.Popen(
             cmd,
@@ -135,6 +136,7 @@ def run_job(cmd):
             errors="replace",
             bufsize=1,
         )
+        current_process = process
         output = []
         for line in process.stdout or []:
             output.append(line)
@@ -148,6 +150,7 @@ def run_job(cmd):
     except Exception as e:
         print(f"❌ Job crashed: {e}")
     finally:
+        current_process = None
         scan_running = False
         backtest_running = False
 
@@ -196,13 +199,25 @@ def api_backtest():
     backtester = os.path.join(BASE_DIR, "backtester.py")
     if not os.path.exists(backtester):
         return jsonify({"status": "unavailable"}), 503
+    symbols = (request.json or {}).get("symbols", [])
+    if not isinstance(symbols, list):
+        symbols = []
+    symbols = [str(symbol).strip() for symbol in symbols if str(symbol).strip()]
     backtest_running = True
     threading.Thread(
         target=run_job,
-        args=([sys.executable, backtester, market],),
+        args=([sys.executable, backtester, market, *symbols],),
         daemon=True,
     ).start()
     return jsonify({"status": "started"})
+
+
+@app.route("/api/cancel", methods=["POST"])
+def api_cancel():
+    if current_process is not None and current_process.poll() is None:
+        current_process.terminate()
+        return jsonify({"status": "cancelled"})
+    return jsonify({"status": "nothing_running"})
 
 
 @app.route("/api/status")

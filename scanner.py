@@ -3,6 +3,7 @@
 Usage: python scanner.py india   (or 'saudi')
 """
 import math
+import signal
 import sys, json, os
 from datetime import datetime
 
@@ -21,6 +22,13 @@ from config import (
 from stock_list import get_yahoo_symbols
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def handle_cancel(signum, frame):
+    raise KeyboardInterrupt
+
+
+signal.signal(signal.SIGTERM, handle_cancel)
 
 
 # ═══════════ INDICATORS ═══════════
@@ -59,7 +67,7 @@ def analyze(symbol):
     try:
         tkr = yf.Ticker(symbol)
         df = tkr.history(
-            period=f"{LOOKBACK_DAYS}d", auto_adjust=True, timeout=20
+            period=f"{LOOKBACK_DAYS}d", auto_adjust=True, timeout=10
         )
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
@@ -152,28 +160,8 @@ def analyze(symbol):
         return None
 
 
-def main():
-    market = sys.argv[1] if len(sys.argv) > 1 else "india"
-    stocks = get_yahoo_symbols(market)
-    total = len(stocks)
-
-    print(f"\n{'='*55}")
-    print(f"🔍 SCANNING {market.upper()} — {total} stocks")
-    print(f"{'='*55}\n")
-
-    raw = []
-    for i, sym in enumerate(stocks, 1):
-        print(f"📥 [{i}/{total}] {sym} ...", flush=True)
-        r = analyze(sym)
-        if r:
-            print(f"   ✅ {r['symbol']} score {r['score']} — {r['signals'][0]}")
-            raw.append(r)
-
-    print(f"\n📊 {len(raw)} stocks with signals")
-
-    # ═══ Split into styles ═══
+def save_results(raw, market, scanned_count):
     styles = {"scalp": [], "swing": [], "positional": [], "invest": []}
-
     for r in raw:
         atr_pct = r["atr"] / r["price"] * 100
         if r["score"] >= 70 and atr_pct < 3.5:
@@ -200,14 +188,12 @@ def main():
     for k in styles:
         styles[k].sort(key=lambda x: x["score"], reverse=True)
         styles[k] = styles[k][:TOP_N_PER_STYLE]
-        print(f"   {k}: {len(styles[k])} setups")
 
-    # ═══ Save ═══
     os.makedirs(os.path.join(BASE_DIR, "data"), exist_ok=True)
     data = {
         "market": market,
         "scanned_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "scanned_count": total,
+        "scanned_count": scanned_count,
         "results": raw,
         "styles": styles,
     }
@@ -215,7 +201,35 @@ def main():
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ Results saved → {path}")
+
+def main():
+    market = sys.argv[1] if len(sys.argv) > 1 else "india"
+    stocks = get_yahoo_symbols(market)
+    total = len(stocks)
+
+    print(f"\n{'='*55}")
+    print(f"🔍 SCANNING {market.upper()} — {total} stocks")
+    print(f"{'='*55}\n")
+
+    raw = []
+    processed = 0
+    try:
+        for i, sym in enumerate(stocks, 1):
+            print(f"📥 [{i}/{total}] {sym}", flush=True)
+            r = analyze(sym)
+            processed = i
+            if r:
+                print(f"   ✅ {r['symbol']} score {r['score']} — {r['signals'][0]}")
+                raw.append(r)
+            if i % 10 == 0:
+                save_results(raw, market, processed)
+                print(f"💾 checkpoint saved ({processed} done)", flush=True)
+    finally:
+        save_results(raw, market, processed)
+        print(f"✅ Saved {processed} stocks scanned so far", flush=True)
+
+    print(f"\n📊 {len(raw)} stocks with signals")
+    print(f"\n✅ Results saved → data/scan_{market}.json")
     print("🎯 Done! Run 'python app.py' and open http://127.0.0.1:5000\n")
 
 

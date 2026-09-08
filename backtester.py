@@ -2,6 +2,7 @@
 import json
 import math
 import os
+import signal
 import sys
 from datetime import datetime
 
@@ -15,10 +16,17 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
+def handle_cancel(signum, frame):
+    raise KeyboardInterrupt
+
+
+signal.signal(signal.SIGTERM, handle_cancel)
+
+
 def test_symbol(symbol, period="2y"):
     try:
         prices = yf.download(symbol, period=period, auto_adjust=True,
-                             progress=False, timeout=20, threads=False)
+                     progress=False, timeout=10, threads=False)
         if prices is None or len(prices) < 80:
             return []
         if hasattr(prices.columns, "levels"):
@@ -61,16 +69,15 @@ def test_symbol(symbol, period="2y"):
         return []
 
 
-def main():
-    market = sys.argv[1].lower() if len(sys.argv) > 1 else "india"
-    if market not in ("india", "saudi"):
-        market = "india"
-    symbols = get_yahoo_symbols(market)
-    trades = []
-    for index, symbol in enumerate(symbols, 1):
-        print(f"[{index}/{len(symbols)}] Testing {symbol}...", flush=True)
-        trades.extend(test_symbol(symbol))
+def normalize_symbol(symbol):
+    value = symbol.upper().strip()
+    for suffix in (".NS", ".SA", ".SR"):
+        if value.endswith(suffix):
+            return value[:-len(suffix)]
+    return value
 
+
+def save_results(trades, market, tested_count):
     returns = [trade["return_pct"] for trade in trades]
     winners = [value for value in returns if value > 0]
     losers = [value for value in returns if value <= 0]
@@ -90,8 +97,36 @@ def main():
     path = os.path.join(DATA_DIR, f"backtest_{market}.json")
     with open(path, "w", encoding="utf-8") as handle:
         json.dump(result, handle, indent=2)
-    print(f"Completed {total} trades; win rate {result['win_rate']}%; expectancy {result['expectancy']}%/trade")
-    print(f"Results saved to {path}")
+
+
+def main():
+    market = sys.argv[1].lower() if len(sys.argv) > 1 else "india"
+    if market not in ("india", "saudi"):
+        market = "india"
+    symbols = get_yahoo_symbols(market)
+    selected = {normalize_symbol(symbol) for symbol in sys.argv[2:] if symbol.strip()}
+    if selected:
+        symbols = [symbol for symbol in symbols if normalize_symbol(symbol) in selected]
+        print(f"🎯 Backtesting {len(symbols)} SELECTED stocks")
+    else:
+        print(f"🎯 Backtesting ALL {len(symbols)} stocks")
+    trades = []
+    tested = 0
+    try:
+        for index, symbol in enumerate(symbols, 1):
+            print(f"📥 [{index}/{len(symbols)}] {symbol}", flush=True)
+            trades.extend(test_symbol(symbol))
+            tested = index
+            if index % 10 == 0:
+                save_results(trades, market, tested)
+                print(f"💾 checkpoint saved ({tested} done)", flush=True)
+    finally:
+        save_results(trades, market, tested)
+        print(f"✅ Saved {tested} stocks scanned so far", flush=True)
+
+    total = len([trade["return_pct"] for trade in trades])
+    returns = [trade["return_pct"] for trade in trades]
+    print(f"Completed {total} trades; expectancy {round(sum(returns) / total, 2) if total else 0}%/trade")
 
 
 if __name__ == "__main__":
