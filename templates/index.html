@@ -132,6 +132,21 @@ h2.section::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,
   padding:18px 14px;text-align:center}
 .calc-item .big{font-size:21px;font-weight:800}
 .calc-item .small{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.5}
+.backtest-report{margin-top:35px}
+.report-meta{color:var(--muted);font-size:13px;margin:-8px 0 16px}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.report-item{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:13px 12px}
+.report-item .lbl{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.7px}
+.report-item .val{font-size:18px;font-weight:800;margin-top:5px}
+.report-item.good .val{color:var(--green)}.report-item.bad .val{color:var(--red)}
+.report-breakdown{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;color:var(--muted);font-size:13px}
+.report-breakdown span{padding:7px 11px;border-radius:9px;background:var(--panel2);border:1px solid var(--border)}
+.trade-table{width:100%;border-collapse:collapse;font-size:13px}
+.trade-table th,.trade-table td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}
+.trade-table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.trade-table td:last-child,.trade-table th:last-child{text-align:right}
+.return-positive{color:var(--green);font-weight:700}.return-negative{color:var(--red);font-weight:700}
+.table-wrap{overflow-x:auto}
 .good{color:var(--green)}.bad{color:var(--red)}.info{color:var(--blue)}.hold{color:var(--gold)}
 .disclaimer{margin-top:18px;padding:12px 16px;border-radius:12px;background:rgba(245,158,11,.08);
   border:1px solid rgba(245,158,11,.25);color:#fbbf24;font-size:12px;line-height:1.6}
@@ -286,6 +301,48 @@ footer{text-align:center;color:#475569;font-size:12px;margin-top:50px;line-heigh
   </div>
 
   <div id="signalArea"></div>
+
+  {% if backtest and backtest.total_trades is defined %}
+  <section class="backtest-report">
+    <h2 class="section">🧪 Backtest Report</h2>
+    <p class="report-meta">{{ backtest.market|upper }} · {{ backtest.period }} history · tested {{ backtest.tested_at }} · {{ backtest.tested_stocks|default(0) }} stocks checked</p>
+    <div class="panel">
+      <div class="report-grid">
+        <div class="report-item"><div class="lbl">Total trades</div><div class="val">{{ backtest.total_trades }}</div></div>
+        <div class="report-item good"><div class="lbl">Win rate</div><div class="val">{{ backtest.win_rate }}%</div></div>
+        <div class="report-item"><div class="lbl">Winning trades</div><div class="val">{{ backtest.winning_trades }}</div></div>
+        <div class="report-item bad"><div class="lbl">Losing trades</div><div class="val">{{ backtest.losing_trades|default(0) }}</div></div>
+        <div class="report-item"><div class="lbl">Expectancy</div><div class="val">{{ backtest.expectancy }}%/trade</div></div>
+        <div class="report-item"><div class="lbl">Profit factor</div><div class="val">{{ backtest.profit_factor if backtest.profit_factor is not none else 'n/a' }}</div></div>
+        <div class="report-item good"><div class="lbl">Average win</div><div class="val">+{{ backtest.average_win|default(0) }}%</div></div>
+        <div class="report-item bad"><div class="lbl">Average loss</div><div class="val">{{ backtest.average_loss|default(0) }}%</div></div>
+        <div class="report-item good"><div class="lbl">Best trade</div><div class="val">+{{ backtest.best_trade|default(0) }}%</div></div>
+        <div class="report-item bad"><div class="lbl">Worst trade</div><div class="val">{{ backtest.worst_trade|default(0) }}%</div></div>
+      </div>
+      <div class="report-breakdown">
+        <span>🎯 Target exits: {{ backtest.exit_breakdown.target|default(0) }}</span>
+        <span>🛑 Stop exits: {{ backtest.exit_breakdown.stop|default(0) }}</span>
+        <span>⏳ Time exits: {{ backtest.exit_breakdown.time|default(0) }}</span>
+      </div>
+      {% if backtest.trades %}
+      <div class="table-wrap">
+        <table class="trade-table">
+          <thead><tr><th>Recent symbol</th><th>Exit type</th><th>Return</th></tr></thead>
+          <tbody>
+          {% for trade in backtest.trades[-12:]|reverse %}
+            <tr>
+              <td>{{ trade.symbol }}</td>
+              <td>{{ trade.exit|capitalize }}</td>
+              <td class="{{ 'return-positive' if trade.return_pct > 0 else 'return-negative' }}">{{ '+' if trade.return_pct > 0 else '' }}{{ trade.return_pct }}%</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
 
   <footer>
     📊 Swing Scanner Pro — signals are algorithmic estimates, not financial advice.<br>

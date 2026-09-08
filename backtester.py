@@ -81,16 +81,26 @@ def save_results(trades, market, tested_count):
     returns = [trade["return_pct"] for trade in trades]
     winners = [value for value in returns if value > 0]
     losers = [value for value in returns if value <= 0]
+    exits = {"target": 0, "stop": 0, "time": 0}
+    for trade in trades:
+        exits[trade["exit"]] = exits.get(trade["exit"], 0) + 1
     total = len(returns)
     result = {
         "market": market,
         "tested_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "period": "2y",
+        "tested_stocks": tested_count,
         "total_trades": total,
         "winning_trades": len(winners),
+        "losing_trades": len(losers),
         "win_rate": round(len(winners) / total * 100, 2) if total else 0,
         "expectancy": round(sum(returns) / total, 2) if total else 0,
+        "average_win": round(sum(winners) / len(winners), 2) if winners else 0,
+        "average_loss": round(sum(losers) / len(losers), 2) if losers else 0,
+        "best_trade": round(max(returns), 2) if returns else 0,
+        "worst_trade": round(min(returns), 2) if returns else 0,
         "profit_factor": round(sum(winners) / abs(sum(losers)), 2) if losers and sum(losers) else None,
+        "exit_breakdown": exits,
         "trades": trades,
     }
     os.makedirs(DATA_DIR, exist_ok=True)
