@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+data/
+!data/
+!data/scan_india.json
+.env
+venv/
+.venv/
+node_modules/

@@ -1,0 +1,841 @@
+{
+  "market": "india",
+  "scanned_at": "2026-09-09 00:41",
+  "scanned_count": 115,
+  "results": [
+    {
+      "symbol": "RELIANCE.NS",
+      "price": 1309.5,
+      "atr": 21.57,
+      "score": 40,
+      "change_pct": -0.95,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (51)",
+        "📊 Above 50-day average",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "ICICIBANK.NS",
+      "price": 1427.5,
+      "atr": 21.25,
+      "score": 65,
+      "change_pct": 0.3,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (51)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "LT.NS",
+      "price": 3999.0,
+      "atr": 53.05,
+      "score": 20,
+      "change_pct": 0.88,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "AXISBANK.NS",
+      "price": 1273.0,
+      "atr": 23.03,
+      "score": 30,
+      "change_pct": 0.47,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (55)",
+        "📊 Above 50-day average"
+      ]
+    },
+    {
+      "symbol": "TATAPOWER.NS",
+      "price": 365.7,
+      "atr": 7.09,
+      "score": 20,
+      "change_pct": -0.62,
+      "signals": [
+        "📈 MACD bullish crossover"
+      ]
+    },
+    {
+      "symbol": "ADANIPORTS.NS",
+      "price": 1707.3,
+      "atr": 37.61,
+      "score": 20,
+      "change_pct": 0.05,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (51)"
+      ]
+    },
+    {
+      "symbol": "TITAN.NS",
+      "price": 4995.0,
+      "atr": 82.54,
+      "score": 45,
+      "change_pct": -0.5,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "JSWSTEEL.NS",
+      "price": 1302.0,
+      "atr": 25.88,
+      "score": 55,
+      "change_pct": -1.74,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (51)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "COALINDIA.NS",
+      "price": 418.85,
+      "atr": 7.38,
+      "score": 20,
+      "change_pct": 0.84,
+      "signals": [
+        "📊 MACD above signal line",
+        "📊 Above 50-day average"
+      ]
+    },
+    {
+      "symbol": "DIVISLAB.NS",
+      "price": 9315.0,
+      "atr": 192.99,
+      "score": 55,
+      "change_pct": 2.36,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "BAJAJ-AUTO.NS",
+      "price": 11800.0,
+      "atr": 228.35,
+      "score": 55,
+      "change_pct": -1.0,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (53)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "GRASIM.NS",
+      "price": 3322.0,
+      "atr": 70.9,
+      "score": 65,
+      "change_pct": 0.36,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (57)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "HINDALCO.NS",
+      "price": 1011.0,
+      "atr": 23.09,
+      "score": 20,
+      "change_pct": 0.1,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "DLF.NS",
+      "price": 681.9,
+      "atr": 16.81,
+      "score": 40,
+      "change_pct": 0.04,
+      "signals": [
+        "💪 RSI healthy momentum (57)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "NYKAA.NS",
+      "price": 332.5,
+      "atr": 7.82,
+      "score": 65,
+      "change_pct": -0.51,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (51)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "POLICYBZR.NS",
+      "price": 1836.0,
+      "atr": 48.48,
+      "score": 50,
+      "change_pct": -1.82,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (61)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "DABUR.NS",
+      "price": 375.5,
+      "atr": 6.34,
+      "score": 30,
+      "change_pct": -1.42,
+      "signals": [
+        "💎 RSI oversold (24) — rebound zone",
+        "🔥 Volume spike (1.6x average)"
+      ]
+    },
+    {
+      "symbol": "GAIL.NS",
+      "price": 176.0,
+      "atr": 3.55,
+      "score": 75,
+      "change_pct": 1.5,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (55)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "HAL.NS",
+      "price": 4856.0,
+      "atr": 100.36,
+      "score": 70,
+      "change_pct": 1.9,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (53)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "🔥 Volume spike (1.5x average)"
+      ]
+    },
+    {
+      "symbol": "SIEMENS.NS",
+      "price": 3927.0,
+      "atr": 94.31,
+      "score": 45,
+      "change_pct": -1.26,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "ABB.NS",
+      "price": 7410.0,
+      "atr": 175.16,
+      "score": 45,
+      "change_pct": -0.3,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "TVSMOTOR.NS",
+      "price": 4132.0,
+      "atr": 101.07,
+      "score": 20,
+      "change_pct": -0.03,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "PNB.NS",
+      "price": 115.6,
+      "atr": 2.09,
+      "score": 20,
+      "change_pct": -1.2,
+      "signals": [
+        "💪 RSI healthy momentum (52)",
+        "📊 Above 50-day average"
+      ]
+    },
+    {
+      "symbol": "UNIONBANK.NS",
+      "price": 186.04,
+      "atr": 4.54,
+      "score": 30,
+      "change_pct": -0.63,
+      "signals": [
+        "💪 RSI healthy momentum (55)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "SJVN.NS",
+      "price": 65.23,
+      "atr": 1.05,
+      "score": 20,
+      "change_pct": 0.38,
+      "signals": [
+        "📈 MACD bullish crossover"
+      ]
+    },
+    {
+      "symbol": "ABCAPITAL.NS",
+      "price": 404.9,
+      "atr": 9.53,
+      "score": 55,
+      "change_pct": 0.72,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (50)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "CHOLAFIN.NS",
+      "price": 1839.0,
+      "atr": 44.32,
+      "score": 20,
+      "change_pct": -0.56,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "CDSL.NS",
+      "price": 1394.6,
+      "atr": 30.62,
+      "score": 50,
+      "change_pct": 0.04,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (56)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "BSE.NS",
+      "price": 3409.8,
+      "atr": 112.8,
+      "score": 35,
+      "change_pct": 3.14,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (50)",
+        "🔥 Volume spike (1.6x average)"
+      ]
+    },
+    {
+      "symbol": "MCX.NS",
+      "price": 3330.2,
+      "atr": 104.2,
+      "score": 75,
+      "change_pct": 1.67,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (63)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "ANGELONE.NS",
+      "price": 299.8,
+      "atr": 9.79,
+      "score": 35,
+      "change_pct": 4.83,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (53)",
+        "🔥 Volume spike (4.5x average)"
+      ]
+    },
+    {
+      "symbol": "KOTAKBANK.NS",
+      "price": 422.1,
+      "atr": 7.07,
+      "score": 30,
+      "change_pct": -0.57,
+      "signals": [
+        "📊 MACD above signal line",
+        "📊 Above 50-day average",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "IDFCFIRSTB.NS",
+      "price": 86.44,
+      "atr": 1.64,
+      "score": 65,
+      "change_pct": -0.31,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (57)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "AUBANK.NS",
+      "price": 1065.0,
+      "atr": 22.45,
+      "score": 20,
+      "change_pct": -0.65,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "PAYTM.NS",
+      "price": 1659.5,
+      "atr": 55.78,
+      "score": 65,
+      "change_pct": 1.37,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (61)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "✨ Perfect MA alignment (Price > MA20 > MA50)"
+      ]
+    },
+    {
+      "symbol": "KEI.NS",
+      "price": 4704.0,
+      "atr": 203.88,
+      "score": 30,
+      "change_pct": -3.01,
+      "signals": [
+        "💎 RSI oversold (31) — rebound zone",
+        "🔥 Volume spike (2.4x average)"
+      ]
+    },
+    {
+      "symbol": "HAVELLS.NS",
+      "price": 1154.0,
+      "atr": 30.13,
+      "score": 30,
+      "change_pct": -3.83,
+      "signals": [
+        "💎 RSI oversold (28) — rebound zone",
+        "🔥 Volume spike (3.6x average)"
+      ]
+    },
+    {
+      "symbol": "AMBER.NS",
+      "price": 7474.0,
+      "atr": 180.17,
+      "score": 40,
+      "change_pct": 0.86,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (52)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "DIXON.NS",
+      "price": 14180.0,
+      "atr": 370.43,
+      "score": 20,
+      "change_pct": -0.42,
+      "signals": [
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "SYRMA.NS",
+      "price": 1457.3,
+      "atr": 46.53,
+      "score": 55,
+      "change_pct": 0.31,
+      "signals": [
+        "🚀 Near 52-week high breakout",
+        "💪 RSI healthy momentum (53)",
+        "🏗️ Strong uptrend (above MA50 & MA200)"
+      ]
+    },
+    {
+      "symbol": "CGPOWER.NS",
+      "price": 895.0,
+      "atr": 22.35,
+      "score": 55,
+      "change_pct": 0.45,
+      "signals": [
+        "📊 MACD above signal line",
+        "💪 RSI healthy momentum (52)",
+        "🏗️ Strong uptrend (above MA50 & MA200)",
+        "🔥 Volume spike (1.7x average)"
+      ]
+    }
+  ],
+  "styles": {
+    "scalp": [
+      {
+        "symbol": "GAIL.NS",
+        "price": 176.0,
+        "atr": 3.55,
+        "score": 75,
+        "change_pct": 1.5,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (55)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 172.45,
+        "target": 183.1,
+        "max_hold_days": 3
+      },
+      {
+        "symbol": "MCX.NS",
+        "price": 3330.2,
+        "atr": 104.2,
+        "score": 75,
+        "change_pct": 1.67,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (63)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3226.0,
+        "target": 3538.6,
+        "max_hold_days": 3
+      },
+      {
+        "symbol": "HAL.NS",
+        "price": 4856.0,
+        "atr": 100.36,
+        "score": 70,
+        "change_pct": 1.9,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (53)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "🔥 Volume spike (1.5x average)"
+        ],
+        "stop": 4755.64,
+        "target": 5056.72,
+        "max_hold_days": 3
+      },
+      {
+        "symbol": "ICICIBANK.NS",
+        "price": 1427.5,
+        "atr": 21.25,
+        "score": 65,
+        "change_pct": 0.3,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 1406.25,
+        "target": 1470.0,
+        "max_hold_days": 3
+      },
+      {
+        "symbol": "GRASIM.NS",
+        "price": 3322.0,
+        "atr": 70.9,
+        "score": 65,
+        "change_pct": 0.36,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (57)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3251.1,
+        "target": 3463.8,
+        "max_hold_days": 3
+      },
+      {
+        "symbol": "NYKAA.NS",
+        "price": 332.5,
+        "atr": 7.82,
+        "score": 65,
+        "change_pct": -0.51,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 324.68,
+        "target": 348.14,
+        "max_hold_days": 3
+      }
+    ],
+    "swing": [
+      {
+        "symbol": "GAIL.NS",
+        "price": 176.0,
+        "atr": 3.55,
+        "score": 75,
+        "change_pct": 1.5,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (55)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 168.9,
+        "target": 190.2,
+        "max_hold_days": 12
+      },
+      {
+        "symbol": "MCX.NS",
+        "price": 3330.2,
+        "atr": 104.2,
+        "score": 75,
+        "change_pct": 1.67,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (63)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3121.8,
+        "target": 3747.0,
+        "max_hold_days": 12
+      },
+      {
+        "symbol": "HAL.NS",
+        "price": 4856.0,
+        "atr": 100.36,
+        "score": 70,
+        "change_pct": 1.9,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (53)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "🔥 Volume spike (1.5x average)"
+        ],
+        "stop": 4655.28,
+        "target": 5257.44,
+        "max_hold_days": 12
+      },
+      {
+        "symbol": "ICICIBANK.NS",
+        "price": 1427.5,
+        "atr": 21.25,
+        "score": 65,
+        "change_pct": 0.3,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 1385.0,
+        "target": 1512.5,
+        "max_hold_days": 12
+      },
+      {
+        "symbol": "GRASIM.NS",
+        "price": 3322.0,
+        "atr": 70.9,
+        "score": 65,
+        "change_pct": 0.36,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (57)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3180.2,
+        "target": 3605.6,
+        "max_hold_days": 12
+      },
+      {
+        "symbol": "NYKAA.NS",
+        "price": 332.5,
+        "atr": 7.82,
+        "score": 65,
+        "change_pct": -0.51,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 316.86,
+        "target": 363.78,
+        "max_hold_days": 12
+      }
+    ],
+    "positional": [
+      {
+        "symbol": "GAIL.NS",
+        "price": 176.0,
+        "atr": 3.55,
+        "score": 75,
+        "change_pct": 1.5,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (55)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 167.12,
+        "target": null,
+        "max_hold_days": 120
+      },
+      {
+        "symbol": "MCX.NS",
+        "price": 3330.2,
+        "atr": 104.2,
+        "score": 75,
+        "change_pct": 1.67,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (63)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3069.7,
+        "target": null,
+        "max_hold_days": 120
+      },
+      {
+        "symbol": "HAL.NS",
+        "price": 4856.0,
+        "atr": 100.36,
+        "score": 70,
+        "change_pct": 1.9,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (53)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "🔥 Volume spike (1.5x average)"
+        ],
+        "stop": 4605.1,
+        "target": null,
+        "max_hold_days": 120
+      },
+      {
+        "symbol": "ICICIBANK.NS",
+        "price": 1427.5,
+        "atr": 21.25,
+        "score": 65,
+        "change_pct": 0.3,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 1374.38,
+        "target": null,
+        "max_hold_days": 120
+      },
+      {
+        "symbol": "GRASIM.NS",
+        "price": 3322.0,
+        "atr": 70.9,
+        "score": 65,
+        "change_pct": 0.36,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (57)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3144.75,
+        "target": null,
+        "max_hold_days": 120
+      },
+      {
+        "symbol": "NYKAA.NS",
+        "price": 332.5,
+        "atr": 7.82,
+        "score": 65,
+        "change_pct": -0.51,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (51)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 312.95,
+        "target": null,
+        "max_hold_days": 120
+      }
+    ],
+    "invest": [
+      {
+        "symbol": "GAIL.NS",
+        "price": 176.0,
+        "atr": 3.55,
+        "score": 75,
+        "change_pct": 1.5,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (55)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 165.35,
+        "target": 204.4,
+        "max_hold_days": 365
+      },
+      {
+        "symbol": "MCX.NS",
+        "price": 3330.2,
+        "atr": 104.2,
+        "score": 75,
+        "change_pct": 1.67,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "📊 MACD above signal line",
+          "💪 RSI healthy momentum (63)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "✨ Perfect MA alignment (Price > MA20 > MA50)"
+        ],
+        "stop": 3017.6,
+        "target": 4163.8,
+        "max_hold_days": 365
+      },
+      {
+        "symbol": "HAL.NS",
+        "price": 4856.0,
+        "atr": 100.36,
+        "score": 70,
+        "change_pct": 1.9,
+        "signals": [
+          "🚀 Near 52-week high breakout",
+          "💪 RSI healthy momentum (53)",
+          "🏗️ Strong uptrend (above MA50 & MA200)",
+          "🔥 Volume spike (1.5x average)"
+        ],
+        "stop": 4554.92,
+        "target": 5658.88,
+        "max_hold_days": 365
+      }
+    ]
+  }
+}

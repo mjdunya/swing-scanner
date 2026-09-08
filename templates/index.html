@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swing Scanner Pro — {{ '🇸🇦 Saudi' if market == 'saudi' else '🇮🇳 India' }}</title>
+<style>
+:root{
+  --bg:#070b14;--panel:#0f1524;--panel2:#0b1120;--border:#1e2a44;
+  --text:#eaf0fa;--muted:#8b98ad;--green:#22c55e;--red:#ef4444;
+  --blue:#3b82f6;--gold:#f59e0b;--purple:#8b5cf6;--cyan:#06b6d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;padding:30px 20px 80px;overflow-x:hidden}
+body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(120px);
+  z-index:-1;opacity:.5;animation:drift 22s ease-in-out infinite alternate}
+body::before{width:520px;height:520px;background:rgba(59,130,246,.18);top:-160px;left:-120px}
+body::after{width:520px;height:520px;background:rgba(139,92,246,.16);bottom:-160px;right:-120px;animation-delay:-11s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.15)}}
+.container{max-width:1150px;margin:0 auto}
+
+.hero{background:linear-gradient(135deg,#1e3a8a 0%,#312e81 50%,#4c1d95 100%);position:relative;
+  overflow:hidden;border-radius:24px;padding:38px;margin-bottom:24px;
+  box-shadow:0 10px 50px rgba(59,130,246,.2);border:1px solid rgba(255,255,255,.08)}
+.hero::before{content:'';position:absolute;top:-55%;right:-10%;width:420px;height:420px;
+  border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.35) 0%,transparent 70%)}
+.hero h1{font-size:34px;font-weight:800;background:linear-gradient(90deg,#fff,#c7d2fe,#e9d5ff);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:#b6c3e0;margin-top:8px;font-size:15px}
+.badge-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:30px;
+  padding:7px 18px;font-size:13px;color:#dbeafe;backdrop-filter:blur(4px);transition:transform .2s}
+.badge:hover{transform:translateY(-2px)}
+.badge b{color:#fff}
+.btn-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:24px}
+.btn{border:none;padding:14px 30px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;
+  color:#fff;transition:all .2s ease;position:relative;overflow:hidden}
+.btn.green{background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 4px 22px rgba(34,197,94,.35)}
+.btn.blue{background:linear-gradient(135deg,#1d4ed8,#3b82f6);box-shadow:0 4px 22px rgba(59,130,246,.35)}
+.btn.green:hover,.btn.blue:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn:disabled{background:#374151;box-shadow:none;cursor:wait;transform:none}
+#status{color:var(--gold);font-size:14px;font-weight:600}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--gold);
+  border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;
+  vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.selector-box{border-radius:18px;padding:22px 25px;margin-bottom:18px;display:flex;gap:20px;
+  align-items:center;flex-wrap:wrap;
+  background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(34,197,94,.06));
+  border:1px solid rgba(59,130,246,.35);backdrop-filter:blur(8px)}
+.selector-box.period{background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(59,130,246,.08));
+  border-color:rgba(139,92,246,.35)}
+.selector-box .icon{font-size:34px}
+.selector-box .txt{flex:1;min-width:220px}
+.selector-box .txt h3{font-size:17px;margin-bottom:4px}
+.selector-box .txt p{color:var(--muted);font-size:13.5px}
+.big-select{background:var(--panel2);color:var(--text);border:2px solid var(--blue);border-radius:12px;
+  padding:14px 18px;font-size:16px;font-weight:600;min-width:280px;cursor:pointer;transition:all .2s}
+.big-select.period{border-color:var(--purple)}
+.big-select:focus{outline:none;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
+
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 18px}
+.tab{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;
+  font-size:14.5px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .25s ease}
+.tab:hover{color:var(--text);transform:translateY(-2px)}
+.tab.active{color:#fff;border-color:transparent;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.tab.active.t-scalp{background:linear-gradient(135deg,#b45309,#f59e0b)}
+.tab.active.t-swing{background:linear-gradient(135deg,#1d4ed8,#3b82f6)}
+.tab.active.t-positional{background:linear-gradient(135deg,#047857,#10b981)}
+.tab.active.t-invest{background:linear-gradient(135deg,#7c3aed,#8b5cf6)}
+.tab .count{background:rgba(255,255,255,.15);border-radius:20px;padding:2px 10px;margin-left:8px;font-size:12.5px}
+
+h2.section{font-size:20px;font-weight:700;margin:35px 0 16px;display:flex;align-items:center;gap:10px}
+h2.section::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:25px;
+  box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.card{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--blue);
+  border-radius:18px;padding:22px;margin-bottom:14px;transition:all .25s ease;animation:fadeIn .45s ease}
+.card:hover{transform:translateX(5px);box-shadow:0 8px 30px rgba(0,0,0,.45)}
+.card.t-scalp{border-left-color:var(--gold)}
+.card.t-swing{border-left-color:var(--blue)}
+.card.t-positional{border-left-color:var(--green)}
+.card.t-invest{border-left-color:var(--purple)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1}}
+.card-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.symbol{font-size:21px;font-weight:800}
+.chip{padding:2px 10px;border-radius:20px;font-size:13px;font-weight:700;margin-left:8px}
+.chip.up{background:rgba(34,197,94,.15);color:var(--green)}
+.chip.down{background:rgba(239,68,68,.15);color:var(--red)}
+.price{color:var(--muted);font-size:15px;font-weight:600}
+.score{padding:5px 15px;border-radius:20px;font-weight:800;font-size:13px;color:#fff;margin-left:8px}
+.signals{color:var(--muted);font-size:13.5px;line-height:1.9;margin-top:10px}
+.signals b{color:#a5b4cf;font-weight:600}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:16px}
+.plan-item{background:var(--panel2);border:1px solid var(--border);border-radius:12px;
+  padding:10px 14px;text-align:center}
+.plan-item .lbl{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.8px}
+.plan-item .val{font-weight:800;font-size:15.5px;margin-top:3px}
+.plan-item.entry .val{color:var(--blue)}
+.plan-item.stop .val{color:var(--red)}
+.plan-item.target .val{color:var(--green)}
+.plan-item.hold .val{color:var(--gold)}
+.plan-calc{background:linear-gradient(135deg,#7c3aed,#8b5cf6);border:none;border-radius:12px;
+  color:#fff;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s ease;min-height:52px}
+.plan-calc:hover{transform:scale(1.05);box-shadow:0 4px 18px rgba(139,92,246,.4)}
+
+.calc-row{display:flex;gap:15px;flex-wrap:wrap;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase}
+.field input,.field select{background:var(--panel2);color:var(--text);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;font-size:16px;min-width:200px}
+.field input:focus,.field select:focus{outline:none;border-color:var(--blue)}
+.calc-btn{background:linear-gradient(135deg,#d97706,#f59e0b);border:none;border-radius:12px;
+  padding:13px 32px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+.calc-btn:hover{transform:translateY(-2px)}
+#calcResult{display:none;margin-top:22px;animation:fadeIn .4s ease}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px}
+.calc-item{background:var(--panel2);border:1px solid var(--border);border-radius:14px;
+  padding:18px 14px;text-align:center}
+.calc-item .big{font-size:21px;font-weight:800}
+.calc-item .small{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.5}
+.good{color:var(--green)}.bad{color:var(--red)}.info{color:var(--blue)}.hold{color:var(--gold)}
+.disclaimer{margin-top:18px;padding:12px 16px;border-radius:12px;background:rgba(245,158,11,.08);
+  border:1px solid rgba(245,158,11,.25);color:#fbbf24;font-size:12px;line-height:1.6}
+.empty{text-align:center;padding:45px;color:var(--muted);background:var(--panel);
+  border-radius:16px;border:1px dashed var(--border)}
+
+#overlay{position:fixed;inset:0;background:rgba(5,8,15,.92);backdrop-filter:blur(8px);z-index:1000;
+  display:none;align-items:center;justify-content:center}
+#overlay.show{display:flex;animation:ovIn .3s ease}
+@keyframes ovIn{from{opacity:0}to{opacity:1}}
+.ov-box{text-align:center;max-width:420px;padding:40px}
+.ov-ring{width:84px;height:84px;margin:0 auto 28px;border:5px solid rgba(59,130,246,.15);
+  border-top-color:var(--blue);border-right-color:var(--purple);border-radius:50%;
+  animation:spin 1s linear infinite}
+.ov-title{font-size:22px;font-weight:800;background:linear-gradient(90deg,#fff,#c7d2fe);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ov-timer{font-size:44px;font-weight:800;color:var(--blue);margin:14px 0 6px;font-variant-numeric:tabular-nums}
+.ov-msg{color:var(--muted);font-size:14.5px;min-height:22px;animation:msgPulse 2s ease infinite}
+@keyframes msgPulse{0%,100%{opacity:.55}50%{opacity:1}}
+.ov-bar{height:8px;background:var(--panel2);border-radius:20px;margin-top:26px;overflow:hidden;border:1px solid var(--border)}
+.ov-bar-fill{height:100%;width:0%;border-radius:20px;
+  background:linear-gradient(90deg,var(--blue),var(--purple),var(--gold));
+  background-size:200% 100%;animation:barSlide 2s linear infinite;transition:width .8s ease}
+@keyframes barSlide{to{background-position:-200% 0}}
+.ov-note{color:#64748b;font-size:12px;margin-top:16px;line-height:1.6}
+
+.skel{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--blue);
+  border-radius:18px;padding:22px;margin-bottom:14px}
+.skel-line{height:14px;border-radius:8px;margin-bottom:12px;
+  background:linear-gradient(90deg,#1a2338 25%,#243352 50%,#1a2338 75%);
+  background-size:200% 100%;animation:shimmer 1.4s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+.skel-line.w60{width:60%}.skel-line.w40{width:40%}.skel-line.w80{width:80%}
+
+#toastWrap{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);z-index:1100;
+  display:flex;flex-direction:column;gap:10px;align-items:center}
+.toast{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:13px 24px;
+  font-size:14px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.5);animation:toastIn .35s ease}
+.toast.ok{border-color:rgba(34,197,94,.5)}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1}}
+
+#toTop{position:fixed;bottom:25px;right:25px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);
+  color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:20px;cursor:pointer;
+  display:none;box-shadow:0 4px 20px rgba(59,130,246,.4);z-index:99;transition:transform .2s}
+#toTop:hover{transform:translateY(-3px)}
+
+footer{text-align:center;color:#475569;font-size:12px;margin-top:50px;line-height:1.8}
+@media(max-width:600px){
+  body{padding:16px 10px 60px}
+  .hero{padding:26px 20px}
+  .hero h1{font-size:26px}
+  .big-select{min-width:100%}
+  .btn{flex:1;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <h1>🎯 Swing Scanner Pro</h1>
+    <p>
+      {% if data.scanned_at %}
+        {{ '🇸🇦 Saudi Tadawul' if market == 'saudi' else '🇮🇳 India NSE' }} — Last scan: <b>{{ data.scanned_at }}</b> — {{ data.scanned_count }} stocks analyzed
+      {% else %}
+        Multi-market, multi-style scanner — Scalp ⚡ / Swing 🌊 / Positional 🏔️ / Invest 💎
+      {% endif %}
+    </p>
+    <div class="badge-row">
+      <span class="badge">⚡ Scalp: <b>{{ styles.scalp|length }}</b></span>
+      <span class="badge">🌊 Swing: <b>{{ styles.swing|length }}</b></span>
+      <span class="badge">🏔️ Positional: <b>{{ styles.positional|length }}</b></span>
+      <span class="badge">💎 Invest: <b>{{ styles.invest|length }}</b></span>
+      {% if backtest and backtest.total_trades %}
+      <span class="badge">🧪 Edge: <b>{{ backtest.expectancy }}%/trade</b></span>
+      {% endif %}
+    </div>
+    <div class="btn-row">
+      <button class="btn green" id="scanBtn" onclick="startJob('/api/scan','scanBtn','scan')">🔄 Run New Scan</button>
+      <button class="btn blue" id="btBtn" onclick="startJob('/api/backtest','btBtn','backtest')">🧪 Run Backtest</button>
+      <span id="status"></span>
+    </div>
+  </div>
+
+  <div class="selector-box">
+    <div class="icon">🌍</div>
+    <div class="txt">
+      <h3>Which market?</h3>
+      <p>Switch between NSE (India) and Tadawul (Saudi Arabia). Each market keeps its own data.</p>
+    </div>
+    <select class="big-select" id="marketSelect" onchange="switchMarket(this.value)">
+      <option value="india" {% if market == 'india' %}selected{% endif %}>🇮🇳 India (NSE)</option>
+      <option value="saudi" {% if market == 'saudi' %}selected{% endif %}>🇸🇦 Saudi Arabia (Tadawul)</option>
+    </select>
+  </div>
+
+  <div class="selector-box period">
+    <div class="icon">⏳</div>
+    <div class="txt">
+      <h3>How long do you want to hold?</h3>
+      <p>Pick your investment period — we'll show only the best setups for that timeframe.</p>
+    </div>
+    <select class="big-select period" id="periodSelect" onchange="applyPeriod()">
+      <option value="all">🌍 Show everything</option>
+      <option value="scalp">⚡ Few days (1–3 days) — Scalping</option>
+      <option value="swing">🌊 1–2 weeks — Swing Trading</option>
+      <option value="positional">🏔️ 2–6 months — Positional</option>
+      <option value="invest">💎 1+ years — Investing</option>
+    </select>
+  </div>
+
+  <h2 class="section">🧮 Return Calculator</h2>
+  <div class="panel" id="calc">
+    <div class="calc-row">
+      <div class="field">
+        <label id="curLabel">💰 Investment Amount</label>
+        <input type="number" id="amount" placeholder="e.g. 50000" min="1">
+      </div>
+      <div class="field">
+        <label>📈 Stock (with style &amp; period)</label>
+        <select id="calcStock"></select>
+      </div>
+      <button class="calc-btn" id="calcBtn" onclick="calculate()">⚡ Calculate</button>
+    </div>
+    <div id="calcResult">
+      <div class="calc-grid" id="calcGrid"></div>
+      <p class="disclaimer">
+        ⚠️ <b>Estimates only.</b> Stops &amp; targets are ATR-based per style. Overnight gaps can
+        exceed any stop-loss. Never invest money you can't afford to lose.
+      </p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active t-scalp" id="tab-scalp" onclick="setTab('scalp')">⚡ Scalping <span class="count">{{ styles.scalp|length }}</span></div>
+    <div class="tab t-swing" id="tab-swing" onclick="setTab('swing')">🌊 Swing <span class="count">{{ styles.swing|length }}</span></div>
+    <div class="tab t-positional" id="tab-positional" onclick="setTab('positional')">🏔️ Positional <span class="count">{{ styles.positional|length }}</span></div>
+    <div class="tab t-invest" id="tab-invest" onclick="setTab('invest')">💎 Invest <span class="count">{{ styles.invest|length }}</span></div>
+  </div>
+
+  <div id="signalArea"></div>
+
+  <footer>
+    📊 Swing Scanner Pro — signals are algorithmic estimates, not financial advice.<br>
+    Always do your own research. Never risk more than you can afford to lose.
+  </footer>
+</div>
+
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="overlay">
+  <div class="ov-box">
+    <div class="ov-ring"></div>
+    <div class="ov-title" id="ovTitle">🔄 Scanning market...</div>
+    <div class="ov-timer" id="ovTimer">0:00</div>
+    <div class="ov-msg" id="ovMsg">Downloading price history...</div>
+    <div class="ov-bar"><div class="ov-bar-fill" id="ovBar"></div></div>
+    <div class="ov-note">☕ Grab a coffee — scanning takes a few minutes. The page refreshes automatically when done.</div>
+  </div>
+</div>
+
+<div id="toastWrap"></div>
+
+<script type="application/json" id="signals-data">{{ styles | tojson }}</script>
+
+<script>
+var MARKET = "{{ market }}";
+var CUR = MARKET === 'saudi' ? 'SAR ' : '₹';
+
+var STYLES = {
+  scalp:      { name: '⚡ Scalping',   label: 'Few days (1–3 days)', color: 'var(--gold)' },
+  swing:      { name: '🌊 Swing',      label: '1–2 weeks',           color: 'var(--blue)' },
+  positional: { name: '🏔️ Positional', label: '2–6 months',          color: 'var(--green)' },
+  invest:     { name: '💎 Investing',  label: '1+ years',            color: 'var(--purple)' }
+};
+
+var SIGNALS = JSON.parse(document.getElementById('signals-data').textContent);
+
+['scalp','swing','positional','invest'].forEach(function(s) {
+  SIGNALS[s] = SIGNALS[s] || [];
+  SIGNALS[s].forEach(function(r) {
+    r.sym = r.symbol || ''; r.price = r.price || 0; r.score = r.score || 0;
+    r.stop = r.stop || 0; r.target = r.target || 0; r.hold = r.max_hold_days || 7;
+    r.chg = r.change_pct || 0; r.atr = r.atr || 1; r.why = r.signals || [];
+  });
+});
+
+function toast(msg, cls) {
+  var t = document.createElement('div');
+  t.className = 'toast ' + (cls || '');
+  t.textContent = msg;
+  document.getElementById('toastWrap').appendChild(t);
+  setTimeout(function() { t.style.opacity = '0'; t.style.transition = 'opacity .4s'; }, 3200);
+  setTimeout(function() { t.remove(); }, 3700);
+}
+
+function switchMarket(mkt) { location.href = '/?market=' + mkt; }
+
+function applyPeriod() {
+  var v = document.getElementById('periodSelect').value;
+  if (v === 'all') { renderAll(); } else { setTab(v); }
+  document.getElementById('signalArea').scrollIntoView({ behavior: 'smooth' });
+}
+
+function setTab(style) {
+  ['scalp','swing','positional','invest'].forEach(function(s) {
+    document.getElementById('tab-' + s).classList.toggle('active', s === style);
+  });
+  renderOne(style);
+}
+
+function holdLabel(days) {
+  if (days <= 3) return days + ' days';
+  if (days <= 21) return Math.round(days / 7) + ' weeks';
+  if (days <= 180) return Math.round(days / 30) + ' months';
+  return Math.round(days / 365) + '+ years';
+}
+function money(n) { return CUR + Math.round(n).toLocaleString('en-IN'); }
+
+function cardHTML(style, idx) {
+  var r = SIGNALS[style][idx];
+  var st = STYLES[style];
+  var targetTxt = r.target > 0 ? CUR + r.target.toFixed(1) : 'Trail 🏇';
+  var why = '';
+  for (var i = 0; i < r.why.length; i++) why += '▸ <b>' + r.why[i] + '</b><br>';
+  var html = '<div class="card t-' + style + '">';
+  html += '<div class="card-header"><span class="symbol">' + r.sym +
+    '<span class="chip ' + (r.chg >= 0 ? 'up' : 'down') + '">' +
+    (r.chg >= 0 ? '+' : '') + r.chg.toFixed(1) + '%</span></span>' +
+    '<span><span class="price">' + CUR + r.price.toFixed(1) + '</span>' +
+    ' <span class="score" style="background:' + st.color + '">' + r.score + ' pts</span></span></div>';
+  html += '<div class="signals">' + why + '</div><div class="plan">';
+  html += '<div class="plan-item entry"><div class="lbl">Entry (tomorrow)</div><div class="val">≈ ' + CUR + r.price.toFixed(1) + '</div></div>';
+  html += '<div class="plan-item stop"><div class="lbl">ATR Stop</div><div class="val">' + CUR + r.stop.toFixed(1) + '</div></div>';
+  html += '<div class="plan-item target"><div class="lbl">Target</div><div class="val">' + targetTxt + '</div></div>';
+  html += '<div class="plan-item hold"><div class="lbl">Max Hold</div><div class="val">' + holdLabel(r.hold) + '</div></div>';
+  html += '<button class="plan-calc" onclick="pickStock(\'' + style + '\',' + idx + ')">🧮 Calculate</button>';
+  html += '</div></div>';
+  return html;
+}
+
+function renderOne(style) {
+  var list = SIGNALS[style] || [];
+  var html = '<h2 class="section">' + STYLES[style].name + ' — Hold: ' + STYLES[style].label + '</h2>';
+  if (list.length === 0) {
+    html += '<div class="empty">😴 No ' + STYLES[style].name + ' setups right now. Patience is a position.</div>';
+  } else {
+    for (var i = 0; i < list.length; i++) html += cardHTML(style, i);
+  }
+  document.getElementById('signalArea').innerHTML = html;
+}
+
+function renderAll() {
+  var html = '';
+  ['scalp','swing','positional','invest'].forEach(function(s) {
+    var list = SIGNALS[s] || [];
+    html += '<h2 class="section">' + STYLES[s].name + ' (' + list.length + ')</h2>';
+    if (list.length === 0) html += '<div class="empty">😴 No setups in this style.</div>';
+    else for (var i = 0; i < list.length; i++) html += cardHTML(s, i);
+  });
+  document.getElementById('signalArea').innerHTML = html;
+}
+
+var ovInterval = null, msgInterval = null, startTime = 0;
+
+var SCAN_MSGS = [
+  '📡 Downloading price history from Yahoo Finance...',
+  '🧮 Calculating RSI, MACD & moving averages...',
+  '📐 Measuring ATR for stop-loss levels...',
+  '🏆 Ranking stocks by relative strength...',
+  '⚡ Hunting scalping setups...',
+  '🌊 Hunting swing setups...',
+  '🏔️ Hunting positional setups...',
+  '💎 Hunting investing gems...',
+  '✍️ Almost done — writing results...'
+];
+var BT_MSGS = [
+  '⏪ Rewinding the market 2 years back...',
+  '📥 Downloading historical data...',
+  '🎯 Simulating entries & exits...',
+  '📊 Measuring win rate & profit factor...',
+  '🧪 Stress-testing the strategy...',
+  '✍️ Writing backtest report...'
+];
+
+function showOverlay(type) {
+  var msgs = (type === 'backtest') ? BT_MSGS : SCAN_MSGS;
+  document.getElementById('ovTitle').textContent = (type === 'backtest')
+    ? '🧪 Running Backtest...'
+    : '🔄 Scanning ' + (MARKET === 'saudi' ? 'Saudi 🇸🇦' : 'India 🇮🇳') + '...';
+  startTime = Date.now();
+  document.getElementById('overlay').classList.add('show');
+  updateTimer();
+  ovInterval = setInterval(updateTimer, 1000);
+  var mi = 0;
+  document.getElementById('ovMsg').textContent = msgs[0];
+  msgInterval = setInterval(function() {
+    mi = (mi + 1) % msgs.length;
+    document.getElementById('ovMsg').textContent = msgs[mi];
+  }, 4000);
+}
+
+function updateTimer() {
+  var sec = Math.floor((Date.now() - startTime) / 1000);
+  var m = Math.floor(sec / 60), s = sec % 60;
+  document.getElementById('ovTimer').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  document.getElementById('ovBar').style.width = Math.min(90, sec * 0.2) + '%';
+}
+
+function hideOverlay(done) {
+  clearInterval(ovInterval);
+  clearInterval(msgInterval);
+  if (done) document.getElementById('ovBar').style.width = '100%';
+  setTimeout(function() {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('ovBar').style.width = '0%';
+  }, done ? 600 : 0);
+}
+
+function showSkeletons() {
+  var html = '<h2 class="section">✨ Fresh results loading...</h2>';
+  for (var i = 0; i < 3; i++) {
+    html += '<div class="skel"><div class="skel-line w40"></div>' +
+      '<div class="skel-line w80"></div><div class="skel-line w60"></div></div>';
+  }
+  document.getElementById('signalArea').innerHTML = html;
+}
+
+var sel = document.getElementById('calcStock');
+['scalp','swing','positional','invest'].forEach(function(s) {
+  (SIGNALS[s] || []).forEach(function(r, i) {
+    var opt = document.createElement('option');
+    opt.value = s + '|' + i;
+    opt.textContent = STYLES[s].name + ' • ' + r.sym + ' — ' + CUR + r.price.toFixed(1) + ' (' + holdLabel(r.hold) + ')';
+    sel.appendChild(opt);
+  });
+});
+if (sel.options.length === 0) {
+  var opt0 = document.createElement('option');
+  opt0.value = '';
+  opt0.textContent = '— Run a scan first —';
+  sel.appendChild(opt0);
+}
+document.getElementById('curLabel').textContent = '💰 Investment Amount (' + CUR.trim() + ')';
+
+function pickStock(style, idx) {
+  document.getElementById('calcStock').value = style + '|' + idx;
+  document.getElementById('calc').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('amount').focus();
+}
+
+function calculate() {
+  var amount = parseFloat(document.getElementById('amount').value);
+  if (!amount || amount <= 0) { alert('Enter a valid investment amount 💰'); return; }
+  var val = document.getElementById('calcStock').value;
+  var parts = val.split('|');
+  if (val === '' || parts.length !== 2) { alert('Run a scan first — no stocks to calculate.'); return; }
+  var r = SIGNALS[parts[0]][parseInt(parts[1], 10)];
+  var st = STYLES[parts[0]];
+  var qty = Math.floor(amount / r.price);
+  var grid = document.getElementById('calcGrid');
+  var result = document.getElementById('calcResult');
+  if (qty < 1) {
+    grid.innerHTML = '<div class="calc-item"><div class="big bad">Amount too small</div><div class="small">' +
+      CUR + Math.round(r.price) + ' per share — need at least that for 1 share of ' + r.sym + '.</div></div>';
+    result.style.display = 'block';
+    return;
+  }
+  var invested = qty * r.price;
+  var profit = r.target > 0 ? qty * (r.target - r.price) : null;
+  var loss = qty * (r.price - r.stop);
+  var rewardPerShare = r.target > 0 ? r.target - r.price : r.atr * 8;
+  var rr = (rewardPerShare / (r.price - r.stop)).toFixed(1);
+  var html = '';
+  html += '<div class="calc-item"><div class="big info">' + r.sym + '</div><div class="small">' + st.name + ' • Hold: ' + holdLabel(r.hold) + '</div></div>';
+  html += '<div class="calc-item"><div class="big info">' + qty + ' shares</div><div class="small">' + money(invested) + ' invested at ≈ ' + CUR + r.price.toFixed(1) + '</div></div>';
+  if (profit !== null) {
+    html += '<div class="calc-item"><div class="big good">+' + money(profit) + '</div><div class="small">If target (' + CUR + r.target.toFixed(1) + ') hits — R:R ' + rr + ':1</div></div>';
+  } else {
+    html += '<div class="calc-item"><div class="big good">Trail it 🏇</div><div class="small">No fixed target — ride the trend (R:R potential ' + rr + ':1+)</div></div>';
+  }
+  html += '<div class="calc-item"><div class="big bad">−' + money(loss) + '</div><div class="small">If ATR stop hits (' + CUR + r.stop.toFixed(1) + ')</div></div>';
+  html += '<div class="calc-item"><div class="big hold">' + holdLabel(r.hold) + '</div><div class="small">Max holding period for this style</div></div>';
+  grid.innerHTML = html;
+  result.style.display = 'block';
+  toast('✅ Calculation complete', 'ok');
+}
+
+function startJob(url, btnId, type) {
+  var btn = document.getElementById(btnId);
+  var status = document.getElementById('status');
+  btn.disabled = true;
+  status.innerHTML = '<span class="spinner"></span>Starting...';
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ market: MARKET })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.status === 'started') {
+      showOverlay(type);
+      pollUntilDone();
+    } else if (d.status === 'busy') {
+      btn.disabled = false;
+      status.innerHTML = '<span class="spinner"></span>A job is already running — please wait...';
+    } else {
+      btn.disabled = false;
+      status.innerHTML = '❌ Failed to start — is the server running?';
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    hideOverlay(false);
+    status.innerHTML = '❌ Server not reachable.';
+  });
+}
+
+function pollUntilDone() {
+  var timer = setInterval(function() {
+    fetch('/api/status')
+      .then(function(r) { return r.json(); })
+      .then(function(s) {
+        if (!s.scan_running && !s.backtest_running) {
+          clearInterval(timer);
+          hideOverlay(true);
+          showSkeletons();
+          toast('🎉 Done! Loading fresh results...', 'ok');
+          setTimeout(function() {
+            location.href = '/?market=' + MARKET;
+          }, 1400);
+        }
+      })
+      .catch(function() { /* keep polling */ });
+  }, 5000);
+}
+
+fetch('/api/status')
+  .then(function(r) { return r.json(); })
+  .then(function(s) {
+    if (s.scan_running) { showOverlay('scan'); pollUntilDone(); }
+    else if (s.backtest_running) { showOverlay('backtest'); pollUntilDone(); }
+  })
+  .catch(function() { /* server offline, ignore */ });
+
+window.addEventListener('scroll', function() {
+  document.getElementById('toTop').style.display = window.scrollY > 500 ? 'block' : 'none';
+});
+
+renderOne('scalp');
+</script>
+</body>
+</html>
+
+CTRL+C
+python app.py
